@@ -1,5 +1,6 @@
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
 
 import images from '../assets';
 import Button from './Button';
@@ -12,7 +13,18 @@ const FooterLinks = ({ heading, items }) => (
 );
 
 const Footer = () => {
+  const [mounted, setMounted] = useState(false);
+
   const { theme } = useTheme();
+
+  // Theme Helper
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // Render nothing until the component is mounted
+  }
 
   return (
     <footer className="flexCenter flex-col border-t dark:border-nft-black-1 border-nft-gray-1 sm:py-8 py-16">
