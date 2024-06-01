@@ -14,9 +14,6 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => (
         <Image
           src={creatorImage}
           fill
-          sizes="(max-width: 768px) 20vw,
-                 (max-width: 1200px) 10vw,
-                 5vw"
           className="object-cover rounded-full"
           alt="creator"
         />
@@ -24,9 +21,6 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => (
           <Image
             src={images.tick}
             fill
-            sizes="(max-width: 768px) 4vw,
-                   (max-width: 1200px) 2vw,
-                   1vw"
             className="object-contain rounded-full"
             alt="tick"
           />

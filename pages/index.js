@@ -2,12 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-import { Banner, CreatorCard } from '../components';
+import { Banner, CreatorCard, NFTCard } from '../components';
 import images from '../assets';
 import { makeId } from '../utils/makeId';
 
 const Home = () => {
   const placeholderCreators = [6, 7, 8, 9, 10];
+  const placeholderNFTs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const [mounted, setMounted] = useState(false);
   const [hideButtons, setHideButtons] = useState(false);
@@ -52,7 +53,7 @@ const Home = () => {
 
   // Creator Placeholder Names Helper
   useEffect(() => {
-    const contents = placeholderCreators.map(() => `0x${makeId(3)}...${makeId(4)}`);
+    const contents = placeholderNFTs.map(() => `0x${makeId(3)}...${makeId(4)}`);
     setPlaceholderNames(contents);
   }, placeholderCreators);
 
@@ -62,7 +63,7 @@ const Home = () => {
   }, []);
 
   if (!mounted) {
-    return null; // Render nothing until the component is mounted
+    return null;
   }
 
   return (
@@ -79,13 +80,13 @@ const Home = () => {
           <div className="relative flex-1 max-w-full flex mt-3" ref={parentRef}>
             <div className="flex flex-row w-max overflow-x-scroll no-scrollbar select-none" ref={scrollRef}>
               {placeholderNames.length > 0 ? (
-                placeholderCreators.map((value, index) => (
+                placeholderCreators.map((value) => (
                   <CreatorCard
                     key={`creator-${value}`}
                     rank={value}
                     creatorImage={images[`creator${value}`]}
-                    creatorName={placeholderNames[index]}
-                    creatorEths={10 - value * 0.5}
+                    creatorName={placeholderNames[value]}
+                    creatorEths={10 - value * 0.534}
                   />
                 ))
               ) : (
@@ -98,9 +99,6 @@ const Home = () => {
                     <Image
                       src={images.left}
                       fill
-                      sizes="(max-width: 768px) 8vw,
-                            (max-width: 1200px) 4vw,
-                            2vw"
                       className={`object-contain ${theme === 'light' && 'filter invert'}`}
                       alt="left_arrow"
                     />
@@ -110,14 +108,39 @@ const Home = () => {
                     <Image
                       src={images.right}
                       fill
-                      sizes="(max-width: 768px) 8vw,
-                            (max-width: 1200px) 4vw,
-                            2vw"
                       className={`object-contain ${theme === 'light' && 'filter invert'}`}
                       alt="right_arrow"
                     />
                   </div>
                 </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <div className="flexBetween mx-4 xs:mx-0 minlg:mx-8 sm:flex-col sm:items-start">
+            <h1 className="flex-1 font-poppins dark:text-white text-nft-black-1 text-2xl minlg:text-4xl font-semibold sm:mb-4">Hot Bids</h1>
+            <div className="flex-2 sm:w-full flex flex-row sm:flex-col">SearchBar</div>
+          </div>
+          <div className="flexBetween mx-4 xs:mx-0 minlg:mx-8 sm:flex-col sm:items-start">
+            <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
+              {placeholderNames.length > 0 ? (
+                placeholderNFTs.map((i) => (
+                  <NFTCard
+                    key={`nft-${i}`}
+                    nft={{
+                      i,
+                      name: `Nifty NFT ${i}`,
+                      price: (10 - i * 0.534).toFixed(2),
+                      seller: placeholderNames[i],
+                      owner: placeholderNames[i],
+                      description: 'Cool NFT on Sale',
+                    }}
+                  />
+                ))
+              ) : (
+                <div>Loading...</div>
               )}
             </div>
           </div>

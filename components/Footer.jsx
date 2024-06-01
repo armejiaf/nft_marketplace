@@ -23,7 +23,7 @@ const Footer = () => {
   }, []);
 
   if (!mounted) {
-    return null; // Render nothing until the component is mounted
+    return null;
   }
 
   return (
